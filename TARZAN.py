@@ -38,7 +38,7 @@ def TARZAN(r, x, l, method):
         # compute score
         z = node.frequency - E
 
-        score.append(z)
+        score.append(abs(z))
     score += [0]*ceil((l-1)/2)
 
     score = convert_score(score, method)

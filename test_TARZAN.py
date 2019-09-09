@@ -7,7 +7,7 @@ import numpy as np
 class test_TARZAN(unittest.TestCase):
 
     # Suffix Trees
-    def ztest_build_tree_McCreight(self):
+    def test_build_tree_McCreight(self):
         """
         Test McCreight algorithm implementation
         """
@@ -18,7 +18,7 @@ class test_TARZAN(unittest.TestCase):
         self.assertEqual(tree.find('ab'), [])
         self.assertEqual(tree.find('nan'), [2])
 
-    def ztest_build_tree_BruteForce(self):
+    def test_build_tree_BruteForce(self):
         """
         Test Brute Force algorithm implementation
         """
@@ -29,7 +29,7 @@ class test_TARZAN(unittest.TestCase):
         self.assertEqual(tree.find('ab'), [])
         self.assertEqual(tree.find('nan'), [2])
 
-    def ztest_tree_LargeExample(self):
+    def test_tree_LargeExample(self):
         """
         Test suffix tree construction and find function on a very large example.
         """
@@ -38,7 +38,7 @@ class test_TARZAN(unittest.TestCase):
         l = tree.find(string[6783:6789])
         self.assertTrue(6783 in l)
 
-    def ztest_tree_find(self):
+    def test_tree_find(self):
         """
         Test all variants of SuffixTree find function
         """
@@ -63,7 +63,7 @@ class test_TARZAN(unittest.TestCase):
         self.assertTrue(isinstance(l, TARZAN._Node))
 
     # _annotate_nodes
-    def ztest_tree_annotate(self):
+    def test_tree_annotate(self):
         """
         Check the annotate node function finds the frequency of each word correctly.
         """
@@ -85,7 +85,7 @@ class test_TARZAN(unittest.TestCase):
         self.assertEqual(node.frequency, 1)
 
     # _symbol_prob
-    def ztest_SymbolProbability(self):
+    def test_SymbolProbability(self):
         """
         If the substring does not exist and not all substrings of the substring
         exist then we compute product of the probabilities of each symbol
@@ -104,7 +104,7 @@ class test_TARZAN(unittest.TestCase):
         self.assertTrue(np.allclose(prob, 108/(len(string)**2)))
 
     # _lower_mod_prod
-    def ztest_lower_mod_prod(self):
+    def test_lower_mod_prod(self):
         """
         If a substring does not exist, check if substrings of that substring exist.
         A simple utility function to compute \prod_{j=jmin}^{jmax} f_tree(w[j:j+l])
@@ -133,10 +133,9 @@ class test_TARZAN(unittest.TestCase):
         self.assertEqual(E1, (len(X)-3+1)/(len(R)-3+1)*4)
         self.assertEqual(E2, (len(X)-3+1)*((8*4*4)/(17**3)))
 
-
-        print('abc', E1-1, 'bcc', E2-1)
-
         score = TARZAN.TARZAN(R, X, 3, method=None)
+        self.assertEqual(abs(E1-1), score[1])
+        self.assertEqual(abs(E2-1), score[2])
 
 
 if __name__=="__main__":
