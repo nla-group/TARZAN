@@ -11,7 +11,7 @@ from ABBA import ABBA
 from oneD_SAX import oneD_SAX
 from SAX import SAX
 
-def TARZAN(r, x, l, method):
+def TARZAN(r, x, l, method, relative=False):
     """
     Modified Implementation of TARZAN, see https://www.cs.ucr.edu/~eamonn/sigkdd_tarzan.pdf
     """
@@ -36,8 +36,11 @@ def TARZAN(r, x, l, method):
         E = compute_expectation(w, R, X, Rtree)
 
         # compute score
-        z = node.frequency - E
-
+        if relative:
+            z = (node.frequency - E)/max(abs(node.frequency), abs(E))
+        else:
+            z = node.frequency - E
+    
         score.append(abs(z))
     score += [0]*ceil((l-1)/2)
 
