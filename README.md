@@ -19,11 +19,11 @@ python test_TARZAN.py -v
 ```
 
 ## TODO
+* Current implementation not linear! Store z-score in suffix tree to prevent repetitive
+  computation. Currently edges contain substrings so not every substring has a node.
+  This prevents breadth search as recommended in [1].
 * Improve documentation.
 * Implement Ukkonen method [5].
-* Store z-score in suffix tree to prevent repetitive computation. Currently edges
-  contain substrings so not every substring has a node. This prevents breadth
-  search as recommended in [1].
 
 ## REFERENCES
 [1] E. Keogh, S. Lonardi, and B. Chiu: "Finding surprising
@@ -35,7 +35,7 @@ aggregation of time series." MIMS Eprint 2019.11 (<http://eprints.maths.manchest
 Manchester Institute for Mathematical Sciences, The University of Manchester, UK, 2019.
 
 [3] J. Lin,E. Keogh, L. Wei, and S. Lonardi: "Experiencing SAX:
-a novel symbolic representation of time series." Data Mining and Knowledge Discovery, 
+a novel symbolic representation of time series." Data Mining and Knowledge Discovery,
 15(2):107--144, 2007.
 
 [4] E. M. McCreight: "A space-economical suffix tree construction algorithm."

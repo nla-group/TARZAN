@@ -40,7 +40,7 @@ def TARZAN(r, x, l, method, relative=False):
             z = (node.frequency - E)/max(abs(node.frequency), abs(E))
         else:
             z = node.frequency - E
-    
+
         score.append(abs(z))
     score += [0]*ceil((l-1)/2)
 

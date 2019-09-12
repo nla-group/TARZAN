@@ -2,9 +2,7 @@ import numpy as np
 np.random.seed(0)
 import matplotlib.pyplot as plt
 from textwrap import wrap
-import sys
-sys.path.append('./..')
-from mydefaults import mydefaults
+from myfigure import myfigure
 
 from TARZAN import TARZAN
 from ABBA import ABBA
@@ -16,7 +14,7 @@ healthy = np.sin(linspace)
 healthy = list(healthy)
 
 ts = healthy*2 + healthy[0:25]
-ts_x = healthy + [ts[0]]*24 + healthy
+ts_x = healthy + [ts[0]]*22 + healthy
 
 mu = np.mean(ts+ts_x)
 s = np.std(ts+ts_x)
@@ -31,8 +29,7 @@ sax = SAX(w=5, k=9)
 onedsax = oneD_SAX(w=5, k_slope=3, k_intercept=3)
 abba = ABBA(tol=0.4, scl=1, min_k=3, max_k=9, verbose=0)
 
-fig, (ax1, ax2, ax3, ax4, ax5) = plt.subplots(5)
-fig, (ax1, ax2, ax3, ax4, ax5) = mydefaults(fig, (ax1, ax2, ax3, ax4, ax5), s=1.5)
+fig, (ax1, ax2, ax3, ax4, ax5) = myfigure(nrows=5, ncols=1, fig_ratio=0.71,  fig_scale=1)
 plt.subplots_adjust(left=0.15, bottom=None, right=0.95, top=None, wspace=None, hspace=None)
 ax1.set_xticks([], minor=False)
 ax1.set_ylabel('R', rotation='horizontal', labelpad=20)
@@ -79,8 +76,7 @@ ax5.axvspan(99, 125, color='grey', alpha=0.5)
 plt.savefig('plots/sine_anomaly_detection.pdf')
 
 # Plot reference data and anomaly data
-plt.figure(num=None, figsize=(15, 10), dpi=80, facecolor='w', edgecolor='k')
-fig, (ax1, ax2) = plt.subplots(2)
+fig, (ax1, ax2) = myfigure(nrows=2, ncols=1, fig_ratio=0.71,  fig_scale=1)
 ax1.plot(ts)
 ax1.axis([0, len(ts), -3, 3])
 ax2.plot(ts_x)
@@ -88,8 +84,7 @@ ax2.axis([0, len(ts), -3, 3])
 plt.savefig('plots/sine.pdf')
 
 # Plot SAX representations for both time series
-plt.figure(num=None, figsize=(15, 10), dpi=80, facecolor='w', edgecolor='k')
-fig, (ax1, ax2) = plt.subplots(2)
+fig, (ax1, ax2) = myfigure(nrows=2, ncols=1, fig_ratio=0.71,  fig_scale=1)
 fig.subplots_adjust(hspace=1)
 ax1.plot(ts)
 str = sax.transform(ts)
@@ -106,8 +101,7 @@ ax2.set_title("\n".join(wrap(str, 120)), fontsize=6)
 plt.savefig('plots/sine_SAX.pdf')
 
 # Plot 1d-SAX representations for both time series
-plt.figure(num=None, figsize=(15, 10), dpi=80, facecolor='w', edgecolor='k')
-fig, (ax1, ax2) = plt.subplots(2)
+fig, (ax1, ax2) = myfigure(nrows=2, ncols=1, fig_ratio=0.71,  fig_scale=1)
 fig.subplots_adjust(hspace=1)
 ax1.plot(ts)
 str = onedsax.transform(ts)
@@ -132,8 +126,7 @@ symbolic_ts, centers = abba.digitize(pieces)
 r = symbolic_ts[0:length_ref]
 x = symbolic_ts[length_ref::]
 
-plt.figure(num=None, figsize=(15, 10), dpi=80, facecolor='w', edgecolor='k')
-fig, (ax1, ax2) = plt.subplots(2)
+fig, (ax1, ax2) = myfigure(nrows=2, ncols=1, fig_ratio=0.71,  fig_scale=1)
 fig.subplots_adjust(hspace=1)
 ax1.plot(ts)
 recon_ABBA_R = abba.inverse_transform(r, centers, ts[0])
@@ -148,14 +141,14 @@ ax2.set_title("\n".join(wrap(x, 120)), fontsize=6)
 plt.savefig('plots/sine_ABBA.pdf')
 
 
-fig, (ax1, ax2) = plt.subplots(2)
-fig, (ax1, ax2) = mydefaults(fig, (ax1, ax2), s=1.5)
+fig, (ax1, ax2) = myfigure(nrows=2, ncols=1, fig_ratio=0.71,  fig_scale=1)
 plt.subplots_adjust(left=0.1, bottom=None, right=0.95, top=0.9, wspace=None, hspace=None)
 ax1.plot(ts, 'k', label='original')
-ax1.plot(recon_SAX_X, '--', label='SAX')
-ax1.plot(recon_1dSAX_X, '-.', label='1D-SAX')
-ax1.plot(recon_ABBA_X, ':', label='ABBA')
+ax1.plot(recon_SAX_R, '--', label='SAX')
+ax1.plot(recon_1dSAX_R, '-.', label='1D-SAX')
+ax1.plot(recon_ABBA_R, ':', label='ABBA')
 ax1.legend(loc='upper center', ncol=4, bbox_to_anchor=(0.5, 1.2))
+ax1.axis([0, 225, -2, 2])
 ax2.plot(ts_x, 'k', label='original')
 ax2.plot(recon_SAX_X, '--', label='SAX')
 ax2.plot(recon_1dSAX_X, '-.', label='1D-SAX')
@@ -163,4 +156,5 @@ ax2.plot(recon_ABBA_X, ':', label='ABBA')
 ax1.set_xticks([], minor=False)
 ax1.set_ylabel('R', rotation='horizontal', labelpad=15)
 ax2.set_ylabel('X', rotation='horizontal', labelpad=15)
+ax2.axis([0, 225, -2, 2])
 plt.savefig('plots/sine_symbolic_rep.pdf')
