@@ -27,7 +27,7 @@ ts_x /= s
 # Full phase of sine wave every 25 time points
 sax = SAX(w=5, k=9)
 onedsax = oneD_SAX(w=5, k_slope=3, k_intercept=3)
-abba = ABBA(tol=0.4, scl=1, min_k=3, max_k=9, verbose=0)
+abba = ABBA(tol=0.13687, scl=1, min_k=3, max_k=9, verbose=0) #0.15 #0.4
 
 fig, (ax1, ax2, ax3, ax4, ax5) = myfigure(nrows=5, ncols=1, fig_ratio=0.71,  fig_scale=1)
 plt.subplots_adjust(left=0.15, bottom=None, right=0.95, top=None, wspace=None, hspace=None)
@@ -123,6 +123,7 @@ pieces2 = abba.compress(ts_x)
 pieces = np.vstack([pieces1, pieces2])
 length_ref = len(pieces1)
 symbolic_ts, centers = abba.digitize(pieces)
+print('ABBA length:', length_ref)
 r = symbolic_ts[0:length_ref]
 x = symbolic_ts[length_ref::]
 
